@@ -24,7 +24,7 @@ JustAudioPlatform get _pluginPlatform {
   // FlutterEngine...
   if (_pluginPlatformCache == null) {
     // Dispose of all existing players within this FlutterEngine. This helps to
-    // shut down existing players on a hot restart. TODO: Remove this hack once
+    // shut down existing players on a hot restart.
     // https://github.com/flutter/flutter/issues/10437 is implemented.
     try {
       pluginPlatform.disposeAllPlayers(DisposeAllPlayersRequest());
@@ -805,8 +805,6 @@ class AudioPlayer {
   }
 
   void _broadcastSequence() {
-    // TODO: update currentIndex first if it's out of range as a result of
-    // removing items from the playlist.
     _sequenceSubject.add(_audioSource?.sequence);
     _updateShuffleIndices();
   }
@@ -932,8 +930,6 @@ class AudioPlayer {
     final audioSession = await AudioSession.instance;
     if (!_handleAudioSessionActivation || await audioSession.setActive(true)) {
       if (!playing) return;
-      // TODO: rewrite this to more cleanly handle simultaneous load/play
-      // requests which each may result in platform play requests.
       final requireActive = _audioSource != null;
       if (requireActive) {
         if (_active) {
@@ -970,8 +966,6 @@ class AudioPlayer {
     );
     _playingSubject.add(false);
     _playbackEventSubject.add(_playbackEvent);
-    // TODO: perhaps modify platform side to ensure new state is broadcast
-    // before this method returns.
     await (await _platform).pause(PauseRequest());
   }
 
@@ -2944,8 +2938,6 @@ class LockCachingAudioSource extends StreamAudioSource {
       throw Exception('HTTP Status Error: ${response.statusCode}');
     }
     (await _partialCacheFile).createSync(recursive: true);
-    // TODO: Should close sink after done, but it throws an error.
-    // ignore: close_sinks
     final sink = (await _partialCacheFile).openWrite();
     final sourceLength =
         response.contentLength == -1 ? null : response.contentLength;
@@ -3159,7 +3151,6 @@ class _InProgressCacheResponse {
   // will likely be downloaded at a faster rate than the rate at which the
   // player is consuming audio data, it is also likely that this buffered data
   // will never be used.
-  // TODO: Improve this code.
   // ignore: close_sinks
   final controller = ReplaySubject<List<int>>();
   final int? end;
@@ -3310,8 +3301,6 @@ _ProxyHandler _proxyHandlerForUri(
       if (headers != null && request.uri.path.toLowerCase().endsWith('.m3u8') ||
           ['application/x-mpegURL', 'application/vnd.apple.mpegurl']
               .contains(request.headers.value(HttpHeaders.contentTypeHeader))) {
-        // If this is an m3u8 file with headers, prepare the nested URIs.
-        // TODO: Handle other playlist formats similarly?
         final m3u8 = await originResponse.transform(utf8.decoder).join();
         for (var line in const LineSplitter().convert(m3u8)) {
           line = line.replaceAllMapped(

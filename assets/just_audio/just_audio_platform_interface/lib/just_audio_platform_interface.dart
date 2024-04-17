@@ -27,7 +27,6 @@ abstract class JustAudioPlatform extends PlatformInterface {
 
   /// Platform-specific plugins should set this with their own platform-specific
   /// class that extends [JustAudioPlatform] when they register themselves.
-  // TODO(amirh): Extract common platform interface logic.
   // https://github.com/flutter/flutter/issues/43368
   static set instance(JustAudioPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
@@ -244,7 +243,6 @@ class PlayerDataMessage {
   final double? pitch;
   final LoopModeMessage? loopMode;
   final ShuffleModeMessage? shuffleMode;
-  // TODO: Eventually move other state here?
   // bufferedPosition, androidAudioSessionId, icyMetadata
 
   PlayerDataMessage({

@@ -82,7 +82,6 @@ abstract class JustAudioPlayer extends AudioPlayerPlatform {
       updatePosition: getCurrentPosition(),
       updateTime: updateTime,
       bufferedPosition: getBufferedPosition(),
-      // TODO: Icy Metadata
       icyMetadata: null,
       duration: getDuration(),
       currentIndex: _index,
@@ -197,7 +196,6 @@ class Html5AudioPlayer extends JustAudioPlayer {
     }
   }
 
-  // TODO: Improve efficiency.
   IndexedAudioSourcePlayer? get _currentAudioSourcePlayer =>
       _audioSourcePlayer != null &&
               _index != null &&
