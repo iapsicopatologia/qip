@@ -186,12 +186,22 @@ class _TelasPageState extends State<TelasPage> {
                             List<Widget> itens =
                                 telas[controller.idPage.value]!['itens']!(
                                     controller, formFieldkey);
-                            return SuperListView.builder(
-                              shrinkWrap: true,
-                              itemCount: itens.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  itens[index],
-                            );
+                            return FutureBuilder(
+                                future: controller.completeSendData.future,
+                                builder: (BuildContext context,
+                                        AsyncSnapshot<dynamic>
+                                            completeSendData) =>
+                                    completeSendData.hasData || !controller.isEnd
+                                        ? SuperListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: itens.length,
+                                            itemBuilder: (BuildContext context,
+                                                    int index) =>
+                                                itens[index],
+                                          )
+                                        : const Center(
+                                            child:
+                                                CircularProgressIndicator()));
                           },
                         ),
                       ),
@@ -276,7 +286,9 @@ class _TelasPageState extends State<TelasPage> {
                     .add("${DateTime.now().toString()} - ${aux.join(";")}");
                 debugPrint(controller.answer.value.toString());
                 if ((controller.idPage.value + 1) >= 78) {
-                  controller.storage.addData(controller.answer.value);
+                  controller.isEnd = true;
+                  controller.completeSendData.complete(
+                      controller.storage.addData(controller.answer.value));
                 }
                 //setState(() => controller.idPage.value++;);
                 Modular.to.popAndPushNamed('/',

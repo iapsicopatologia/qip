@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../interfaces/asssistido_remote_storage_interface.dart';
@@ -5,6 +7,8 @@ import 'package:just_audio/just_audio.dart';
 
 //Reatividade na classe inteira
 class TelasController {
+  bool isEnd = false;
+  final completeSendData = Completer<dynamic>();
   final answer = ValueNotifier<List<String>>([]);
   final idPage = ValueNotifier<int>(0);
   final answerAux = ValueNotifier<List<ValueNotifier<String>>>([]);
