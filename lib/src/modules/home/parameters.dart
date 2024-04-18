@@ -1980,7 +1980,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
         [
           const DisplayFrame(
             body:
-                'No botão que aparece na barra de aplicação acima é possível mudar entre duas imagens: uma considerada \'verdadeira\' e a outra \'falsa\'. Entre elas, há 5 alterações que você deve identificar, apontando as discrepâncias por meio de cliques nos locais correspondentes na imagem falsa.',
+                'Clicando no icone acima é possível mudar entre duas imagens: uma considerada \'verdadeira\' e a outra \'falsa\'. Entre elas, há 5 alterações que você deve identificar, apontando as discrepâncias por meio de cliques nos locais correspondentes na imagem falsa.',
             bodyHasFrame: false,
           ),
           const SizedBox(height: 10.0),

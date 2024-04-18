@@ -58,7 +58,7 @@ class _DotsLineState extends State<DotsLine> {
             IconButton(
               icon: Icon(
                 Icons.edit,
-                color: isEdit == true ? Colors.red : Colors.white,
+                color: isEdit == true ? Colors.red : Colors.grey,
               ),
               onPressed: () {
                 setState(() {
@@ -69,7 +69,7 @@ class _DotsLineState extends State<DotsLine> {
             IconButton(
               icon: Icon(
                 Icons.delete,
-                color: isEdit == false ? Colors.red : Colors.white,
+                color: isEdit == false ? Colors.red : Colors.grey,
               ),
               onPressed: () {
                 setState(() {

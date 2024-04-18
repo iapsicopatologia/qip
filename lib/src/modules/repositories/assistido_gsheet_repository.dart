@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -38,13 +39,62 @@ class AssistidoRemoteStorageRepository
             "AssistidoRemoteStorageRepository - sendUrl - ${response?.data}");
       }
     }
-    return null;
+    return false;
+  }
+
+  Future<dynamic> sendPost(
+      {String table = "BDados",
+      required String func,
+      required String type,
+      dynamic p1,
+      dynamic p2,
+      dynamic p3}) async {
+    await provider
+        ?.post(
+      '$baseUrl/macros/s/AKfycbwKiHbY2FQ295UrySD3m8pG_JDJO5c8SFxQG4VQ9eo9pzZQMmEfpAZYKdhVJcNtznGV/exec',
+      queryParameters: {
+        "table": table,
+        "func": func,
+        "type": type,
+        "p1": p1,
+        "p2": p2,
+      },
+      options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          }),
+      data: jsonEncode({'p3': base64.encode(p3).toString()}),
+    )
+        .then(
+      (value) async {
+        Response? response;
+        if (value.statusCode == 302) {
+          var location = value.headers["location"];
+          response = await provider?.get(location![0]);
+        } else {
+          response = value;
+        }
+        if (response != null && response.statusCode == 200) {
+          var map = response.data as Map;
+          if ((map["status"] ?? "Error") == "SUCCESS") {
+            return map["items"];
+          } else {
+            debugPrint("POST ERROR - ${map["status"]}");
+          }
+        } else {
+          debugPrint("POST ERROR - $response");
+        }
+      },
+    );
+    return false;
   }
 
   @override
-  Future<dynamic> addData(List<dynamic>? value, {String table = "BDados"}) async {
+  Future<dynamic> addData(List<dynamic>? value,
+      {String table = "BDados"}) async {
     if (value != null) {
-      var resp = sendGet(table: table, func: 'add', type: 'data', p1: value);
+      var resp = sendPost(table: table, func: 'add', type: 'data', p3: value);
       return resp;
     }
     return null;
