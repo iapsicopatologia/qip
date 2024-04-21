@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:web/web.dart';
 import '../interfaces/asssistido_remote_storage_interface.dart';
 
 class AssistidoRemoteStorageRepository
@@ -46,55 +47,28 @@ class AssistidoRemoteStorageRepository
       {String table = "BDados",
       required String func,
       required String type,
-      dynamic p1,
-      dynamic p2,
-      dynamic p3}) async {
-    await provider
-        ?.post(
-      '$baseUrl/macros/s/AKfycbwKiHbY2FQ295UrySD3m8pG_JDJO5c8SFxQG4VQ9eo9pzZQMmEfpAZYKdhVJcNtznGV/exec',
-      queryParameters: {
-        "table": table,
-        "func": func,
-        "type": type,
-        "p1": p1,
-        "p2": p2,
+      dynamic p1}) async {
+    final String data = jsonEncode(<String, String>{'p1': 'josue'});
+    final request = await HttpRequest.request(
+      "$baseUrl/macros/s/AKfycbwKiHbY2FQ295UrySD3m8pG_JDJO5c8SFxQG4VQ9eo9pzZQMmEfpAZYKdhVJcNtznGV/exec?table=$table&func=$func&type=$type",
+      method: "POST",
+      requestHeaders: <String, String>{
+        "Content-Type": "application/json",
+        "Content-Length": "${data.length}",
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
       },
-      options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status! < 500;
-          }),
-      data: jsonEncode({'p3': base64.encode(p3).toString()}),
-    )
-        .then(
-      (value) async {
-        Response? response;
-        if (value.statusCode == 302) {
-          var location = value.headers["location"];
-          response = await provider?.get(location![0]);
-        } else {
-          response = value;
-        }
-        if (response != null && response.statusCode == 200) {
-          var map = response.data as Map;
-          if ((map["status"] ?? "Error") == "SUCCESS") {
-            return map["items"];
-          } else {
-            debugPrint("POST ERROR - ${map["status"]}");
-          }
-        } else {
-          debugPrint("POST ERROR - $response");
-        }
-      },
+      sendData: data,
     );
-    return false;
+    return request.responseText;
   }
 
   @override
   Future<dynamic> addData(List<dynamic>? value,
       {String table = "BDados"}) async {
     if (value != null) {
-      var resp = sendPost(table: table, func: 'add', type: 'data', p3: value);
+      var resp = sendPost(table: table, func: 'add', type: 'data', p1: value);
       return resp;
     }
     return null;
