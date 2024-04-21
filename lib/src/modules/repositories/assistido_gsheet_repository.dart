@@ -43,32 +43,16 @@ class AssistidoRemoteStorageRepository
     return false;
   }
 
-  Future<dynamic> sendPost(
-      {String table = "BDados",
-      required String func,
-      required String type,
-      dynamic p1}) async {
-    final String data = jsonEncode(<String, String>{'p1': 'josue'});
-    final request = await HttpRequest.request(
-      "$baseUrl/macros/s/AKfycbwKiHbY2FQ295UrySD3m8pG_JDJO5c8SFxQG4VQ9eo9pzZQMmEfpAZYKdhVJcNtznGV/exec?table=$table&func=$func&type=$type",
-      method: "POST",
-      requestHeaders: <String, String>{
-        "Content-Type": "application/json",
-        "Content-Length": "${data.length}",
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-      },
-      sendData: data,
-    );
-    return request.responseText;
-  }
-
   @override
   Future<dynamic> addData(List<dynamic>? value,
       {String table = "BDados"}) async {
     if (value != null) {
-      var resp = sendPost(table: table, func: 'add', type: 'data', p1: value);
+      String resp =
+          await sendGet(table: table, func: 'add', type: 'data', p1: value[0]);
+      for (var vl in value.sublist(1)) {
+        await sendGet(
+            table: table, func: 'insert', type: 'data', p1: resp, p2: vl);
+      }
       return resp;
     }
     return null;
