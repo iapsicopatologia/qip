@@ -498,7 +498,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
                 keyboardType: TextInputType.name,
                 inputFormatters: [
                   FilteringTextInputFormatter.singleLineFormatter
-                ],                
+                ],
                 validator: (value) {
                   if (value == null) {
                     return 'Digite a denominação desse outro tipo de transtorno';
@@ -2972,7 +2972,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
                       'Tenho daltonismo') {
                     controller.idPage.value = controller.idPage.value + 2;
                   }
-                  state.currentState!.didChange(controller.answerAux.value);                  
+                  state.currentState!.didChange(controller.answerAux.value);
                 },
               ),
             title:
@@ -3141,10 +3141,14 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'hasProx': false,
     'header': 'Parabéns!!!!',
     'answerLenght': 0,
-    'itens': (_, __) => [
-          const DisplayFrame(
+    'itens': (
+      TelasController controller,
+      GlobalKey<FormFieldState<List<ValueNotifier<String>>>> state,
+    ) =>
+        [
+          DisplayFrame(
             body:
-                "Você terminou o questionário, agradeçemos muito pela sua disponibilidade.\n\nOBS.: Você ja pode fechar esta página.",
+                "Você terminou o questionário, agradeçemos muito pela sua disponibilidade.\n\nuniqueID: gljd${controller.rowId}dt\n\nOBS.: Você ja pode fechar esta página.",
             bodyHasFrame: false,
           ),
         ]
