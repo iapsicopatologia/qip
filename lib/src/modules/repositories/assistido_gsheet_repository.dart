@@ -47,7 +47,7 @@ class AssistidoRemoteStorageRepository
   Future<dynamic> addData(List<dynamic>? value,
       {String table = "BDados"}) async {
     if (value != null) {
-      String resp =
+      int resp =
           await sendGet(table: table, func: 'add', type: 'data', p1: value[0]);
       for (var vl in value.sublist(1)) {
         await sendGet(

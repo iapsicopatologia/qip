@@ -35,12 +35,14 @@ dependencies:
   dio: ^5.4.2+1
   super_sliver_list: ^0.4.1
   web: ^0.5.1
+  internet_connection_checker: ^1.0.0+1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.2
+  build_runner: ^2.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -165,3 +167,8 @@ flutter:
     - assets/five_errors2.jpg
     - assets/arvore_circulos.png
     - assets/montandocerebro.png
+
+scripts:
+  mobx: dart run build_runner watch --delete-conflicting-outputs
+  clean: dart run build_runner clean
+  build: dart run build_runner build --delete-conflicting-outputs
