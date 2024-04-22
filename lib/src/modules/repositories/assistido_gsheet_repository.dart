@@ -44,18 +44,18 @@ class AssistidoRemoteStorageRepository
   }
 
   @override
-  Future<dynamic> addData(List<dynamic>? value,
+  Future<dynamic> addData(String value, {String table = "BDados"}) async {
+    int resp =
+        await sendGet(table: table, func: 'add', type: 'data', p1: value);
+    return resp;
+  }
+
+  @override
+  Future<dynamic> insertData(String value, int rowId,
       {String table = "BDados"}) async {
-    if (value != null) {
-      int resp =
-          await sendGet(table: table, func: 'add', type: 'data', p1: value[0]);
-      for (var vl in value.sublist(1)) {
-        await sendGet(
-            table: table, func: 'insert', type: 'data', p1: resp, p2: vl);
-      }
-      return resp;
-    }
-    return null;
+    int resp = await sendGet(
+        table: table, func: 'insert', type: 'data', p1: rowId, p2: value);
+    return resp;
   }
 
   @override

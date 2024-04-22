@@ -288,6 +288,7 @@ class _TelasPageState extends State<TelasPage> {
                 if ((controller.idPage.value + 1) >= 78) {
                   controller.isEnd = true;                  
                 }
+                controller.sync();
                 //setState(() => controller.idPage.value++;);
                 Modular.to.popAndPushNamed('/',
                     arguments: controller.idPage.value + 1);

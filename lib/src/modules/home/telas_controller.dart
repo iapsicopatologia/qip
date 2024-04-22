@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../interfaces/asssistido_remote_storage_interface.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -13,35 +11,33 @@ class TelasController {
   final completeSendData = Completer<dynamic>();
   final answer = ValueNotifier<List<String>>([]);
   final idPage = ValueNotifier<int>(0);
+  int rowId = 0;
   final answerAux = ValueNotifier<List<ValueNotifier<String>>>([]);
   final emailAux = ValueNotifier<String>("");
   final isImagemFull = ValueNotifier<bool>(true);
   final storage = Modular.get<AssistidoRemoteStorageInterface>();
 
-  TelasController() {
-    answer.addListener(() => sync());
-  }
-
   Future<dynamic> sync() async {
-    if (await InternetConnectionChecker().hasConnection) {
-      if (isRunningSync.value == false) {
-        isRunningSync.value = true;
-        String? sync;
-        while (sync != null) {
-          try {
-            sync = answer.value.first;
-            answer.value = answer.value.sublist(1);
-            if (isEnd == true && answer.value.isEmpty) {
-              completeSendData.complete(storage.addData(answer.value));
+    if (isRunningSync.value == false) {
+      isRunningSync.value = true;
+      String syncVar;
+      while (answer.value.isNotEmpty) {
+        syncVar = answer.value.removeAt(0);
+        if (isEnd == true && answer.value.isEmpty) {
+          completeSendData.complete(storage.insertData(syncVar, rowId));
+        } else {
+          dynamic resp;
+          do {
+            if (rowId == 0) {
+              rowId = await storage.addData(syncVar);
+              resp = rowId;
             } else {
-              await storage.addData(answer.value);
+              resp = await storage.insertData(syncVar, rowId);
             }
-          } catch (e) {
-            sync = null;
-          }
+          } while (resp == null || resp is! int);
         }
-        isRunningSync.value = false;
       }
+      isRunningSync.value = false;
     }
     return null;
   }
