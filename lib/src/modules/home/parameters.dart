@@ -653,7 +653,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'hasProx': false,
     'header': '',
     'delay': 3,
-    'answerLenght': 1,
+    'answerLenght': 0,
     'itens': (_, __) => [
           const DisplayFrame(
             body: '2 - 7',
@@ -694,7 +694,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'hasProx': false,
     'header': '',
     'delay': 3,
-    'answerLenght': 1,
+    'answerLenght': 0,
     'itens': (_, __) => [
           const DisplayFrame(
             body: '5 - 6 - 4',
@@ -735,7 +735,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'hasProx': false,
     'header': '',
     'delay': 3,
-    'answerLenght': 1,
+    'answerLenght': 0,
     'itens': (_, __) => [
           const DisplayFrame(
             body: '6 - 4 - 3 - 9',
@@ -776,7 +776,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'hasProx': false,
     'header': '',
     'delay': 3,
-    'answerLenght': 1,
+    'answerLenght': 0,
     'itens': (_, __) => [
           const DisplayFrame(
             body: '4 - 2 - 7 - 3 - 1',
@@ -817,7 +817,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'hasProx': false,
     'header': '',
     'delay': 3,
-    'answerLenght': 1,
+    'answerLenght': 0,
     'itens': (_, __) => [
           const DisplayFrame(
             body: '6 - 1 - 9 - 4 - 7 - 3',
@@ -858,7 +858,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'hasProx': false,
     'header': '',
     'delay': 3,
-    'answerLenght': 1,
+    'answerLenght': 0,
     'itens': (_, __) => [
           const DisplayFrame(
             body: '5 - 9 - 1 - 7 - 4 - 2 - 8',
