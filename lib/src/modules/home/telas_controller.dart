@@ -9,7 +9,7 @@ class TelasController {
   bool isEnd = false;
   final isRunningSync = ValueNotifier<bool>(false);
   final completeSendData = Completer<dynamic>();
-  final answer = ValueNotifier<List<String>>([]);
+  final answer = ValueNotifier<List<(int, String)>>([]);
   final idPage = ValueNotifier<int>(0);
   int rowId = 0;
   final answerAux = ValueNotifier<List<ValueNotifier<String>>>([]);
@@ -20,12 +20,22 @@ class TelasController {
   Future<dynamic> sync() async {
     if (isRunningSync.value == false) {
       isRunningSync.value = true;
+      int colId;
       String syncVar;
       while (answer.value.isNotEmpty) {
-        syncVar = answer.value.removeAt(0);
+        (colId, syncVar) = answer.value.removeAt(0);
         if (isEnd == true && answer.value.isEmpty) {
-          completeSendData
-              .complete(storage.setData(syncVar, rowId, idPage.value));
+          completeSendData.complete(
+            () async {
+              int count = 0;
+              dynamic resp;
+              do {
+                count++;
+                resp = await storage.setData(syncVar, rowId, colId);
+              } while (
+                  (resp == null || resp is! int || resp != colId) && count < 5);
+            },
+          );
         } else {
           dynamic resp;
           int count = 0;
@@ -38,9 +48,9 @@ class TelasController {
           } else {
             do {
               count++;
-              resp = await storage.setData(syncVar, rowId, idPage.value);
-            } while ((resp == null || resp is! int || resp != idPage.value) &&
-                count < 5);
+              resp = await storage.setData(syncVar, rowId, colId);
+            } while (
+                (resp == null || resp is! int || resp != colId) && count < 5);
           }
         }
       }

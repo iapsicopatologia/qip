@@ -191,7 +191,8 @@ class _TelasPageState extends State<TelasPage> {
                                 builder: (BuildContext context,
                                         AsyncSnapshot<dynamic>
                                             completeSendData) =>
-                                    completeSendData.hasData || !controller.isEnd
+                                    completeSendData.hasData ||
+                                            !controller.isEnd
                                         ? SuperListView.builder(
                                             shrinkWrap: true,
                                             itemCount: itens.length,
@@ -281,15 +282,19 @@ class _TelasPageState extends State<TelasPage> {
         onPressed: resp.isEmpty
             ? null
             : () {
-                List<String> aux = resp.map((e) => e.value).toList();
-                controller.answer.value
-                    .add("${DateTime.now().toString()} - ${aux.join(";")}");
-                debugPrint(controller.answer.value.toString());
-                if ((controller.idPage.value + 1) >= 78) {
-                  controller.isEnd = true;                  
+                if (telas[controller.idPage.value]?['answerLenght'] != 0) {
+                  List<String> aux = resp.map((e) => e.value).toList();
+                  controller.answer.value.add((
+                    controller.idPage.value,
+                    "${DateTime.now().toString()} - ${aux.join(";")}"
+                  ));
+                  debugPrint(controller.answer.value.toString());
+                  if ((controller.idPage.value + 1) >= 78) {
+                    controller.isEnd = true;
+                  }
+                  controller.sync();
+                  //setState(() => controller.idPage.value++;);
                 }
-                controller.sync();
-                //setState(() => controller.idPage.value++;);
                 Modular.to.popAndPushNamed('/',
                     arguments: controller.idPage.value + 1);
               },
