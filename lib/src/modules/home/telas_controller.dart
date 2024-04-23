@@ -34,7 +34,18 @@ class TelasController {
           rowId = resp;
         } else {
           if (isEnd == true && answer.value.isEmpty) {
-            completeSendData.complete(storage.setData(syncVar, rowId, colId));
+            completeSendData.complete(
+              Future.sync(
+                () async {
+                  do {
+                    count++;
+                    resp = await storage.setData(syncVar, rowId, colId);
+                  } while ((resp == null || resp is! int || resp != colId) &&
+                      count < 5);
+                  return true;
+                },
+              )
+            );
           } else {
             do {
               count++;
