@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:web/web.dart';
 import '../interfaces/asssistido_remote_storage_interface.dart';
 
 class AssistidoRemoteStorageRepository
@@ -61,7 +59,7 @@ class AssistidoRemoteStorageRepository
   @override
   Future<dynamic> setData(String value, int rowId, int colId,
       {String table = "BDados"}) async {
-    int resp = await sendGet(
+    dynamic resp = await sendGet(
         table: table, func: 'set', type: 'data', p1: rowId, p2: colId, p3: value);
     return resp;
   }

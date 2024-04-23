@@ -24,19 +24,24 @@ class TelasController {
       while (answer.value.isNotEmpty) {
         syncVar = answer.value.removeAt(0);
         if (isEnd == true && answer.value.isEmpty) {
-          completeSendData.complete(storage.setData(syncVar, rowId, idPage.value));
+          completeSendData
+              .complete(storage.setData(syncVar, rowId, idPage.value));
         } else {
           dynamic resp;
-          int count=0;
-          do {
-            count++;
-            if (rowId == 0) {
-              rowId = await storage.addData(syncVar);
-              resp = rowId;
-            } else {
+          int count = 0;
+          if (rowId == 0) {
+            do {
+              count++;
+              resp = await storage.addData(syncVar);
+            } while ((resp == null || resp is! int) && count < 5);
+            rowId = resp;
+          } else {
+            do {
+              count++;
               resp = await storage.setData(syncVar, rowId, idPage.value);
-            }
-          } while (resp == null || resp is! int || count < 5);
+            } while ((resp == null || resp is! int || resp != idPage.value) &&
+                count < 5);
+          }
         }
       }
       isRunningSync.value = false;
