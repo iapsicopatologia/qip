@@ -39,10 +39,6 @@ class TelasController {
             do {
               count++;
               resp = await storage.setData(syncVar, rowId, colId);
-              if ((resp == null || resp is! int || resp != colId) &&
-                  count < 5) {
-                count = 3;
-              }
             } while (
                 (resp == null || resp is! int || resp != colId) && count < 5);
           }
