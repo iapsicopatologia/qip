@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../interfaces/asssistido_remote_storage_interface.dart';
+import 'package:get_mac_address/get_mac_address.dart';
 import 'package:just_audio/just_audio.dart';
 
 //Reatividade na classe inteira
 class TelasController {
+  String macAddress = 'Unknown';
+  final _getMacAddressPlugin = GetMacAddress();
   bool isEnd = false;
   final isRunningSync = ValueNotifier<bool>(false);
   final completeSendData = Completer<dynamic>();
@@ -29,23 +33,22 @@ class TelasController {
         if (rowId == 0) {
           do {
             count++;
-            resp = await storage.addData(syncVar);
+            final macAddress = await getMacAddress();
+            resp = await storage.addData([macAddress, syncVar]);
           } while ((resp == null || resp is! int) && count < 5);
           rowId = resp;
         } else {
           if (isEnd == true && answer.value.isEmpty) {
-            completeSendData.complete(
-              Future.sync(
-                () async {
-                  do {
-                    count++;
-                    resp = await storage.setData(syncVar, rowId, colId);
-                  } while ((resp == null || resp is! int || resp != colId) &&
-                      count < 5);
-                  return true;
-                },
-              )
-            );
+            completeSendData.complete(Future.sync(
+              () async {
+                do {
+                  count++;
+                  resp = await storage.setData(syncVar, rowId, colId);
+                } while ((resp == null || resp is! int || resp != colId) &&
+                    count < 5);
+                return true;
+              },
+            ));
           } else {
             do {
               count++;
@@ -106,5 +109,16 @@ class TelasController {
         },
       );
     }
+  }
+
+  Future<String> getMacAddress() async {
+    String macAddress;
+    try {
+      macAddress =
+          await _getMacAddressPlugin.getMacAddress() ?? 'Unknown mac address';
+    } on PlatformException {
+      macAddress = 'Failed mac address';
+    }
+    return macAddress;
   }
 }

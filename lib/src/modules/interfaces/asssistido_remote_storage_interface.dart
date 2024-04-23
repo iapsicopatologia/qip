@@ -1,5 +1,5 @@
 abstract class AssistidoRemoteStorageInterface {
-  Future<dynamic> addData(String value,
+  Future<dynamic> addData(List<String> value,
       {String table}); //Adiciona varias linhas no final da Base de Dados
   Future<dynamic> sendEmail(String value);
   Future<List<dynamic>?> getChanges(
