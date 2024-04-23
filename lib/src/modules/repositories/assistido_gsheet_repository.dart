@@ -51,10 +51,18 @@ class AssistidoRemoteStorageRepository
   }
 
   @override
-  Future<dynamic> insertData(String value, int rowId,
+  Future<dynamic> appendData(String value, int rowId,
       {String table = "BDados"}) async {
     int resp = await sendGet(
-        table: table, func: 'insert', type: 'data', p1: rowId, p2: value);
+        table: table, func: 'append', type: 'data', p1: rowId, p2: value);
+    return resp;
+  }
+
+  @override
+  Future<dynamic> setData(String value, int rowId, int colId,
+      {String table = "BDados"}) async {
+    int resp = await sendGet(
+        table: table, func: 'set', type: 'data', p1: rowId, p2: colId, p3: value);
     return resp;
   }
 
@@ -80,14 +88,6 @@ class AssistidoRemoteStorageRepository
   Future<List<dynamic>?> getRow(String rowId, {String table = "BDados"}) async {
     final List<dynamic> response =
         await sendGet(func: 'get', type: 'datas', p1: rowId);
-    return response;
-  }
-
-  @override
-  Future<String?> setData(String rowsId, List<dynamic> data,
-      {String table = "BDados"}) async {
-    final String? response = await sendGet(
-        table: table, func: 'set', type: 'data', p1: rowsId, p2: data);
     return response;
   }
 
