@@ -24,31 +24,25 @@ class TelasController {
       String syncVar;
       while (answer.value.isNotEmpty) {
         (colId, syncVar) = answer.value.removeAt(0);
-        if (isEnd == true && answer.value.isEmpty) {
-          completeSendData.complete(
-            () async {
-              int count = 0;
-              dynamic resp;
-              do {
-                count++;
-                resp = await storage.setData(syncVar, rowId, colId);
-              } while (
-                  (resp == null || resp is! int || resp != colId) && count < 5);
-            },
-          );
+        dynamic resp;
+        int count = 0;
+        if (rowId == 0) {
+          do {
+            count++;
+            resp = await storage.addData(syncVar);
+          } while ((resp == null || resp is! int) && count < 5);
+          rowId = resp;
         } else {
-          dynamic resp;
-          int count = 0;
-          if (rowId == 0) {
-            do {
-              count++;
-              resp = await storage.addData(syncVar);
-            } while ((resp == null || resp is! int) && count < 5);
-            rowId = resp;
+          if (isEnd == true && answer.value.isEmpty) {
+            completeSendData.complete(storage.setData(syncVar, rowId, colId));
           } else {
             do {
               count++;
               resp = await storage.setData(syncVar, rowId, colId);
+              if ((resp == null || resp is! int || resp != colId) &&
+                  count < 5) {
+                count = 3;
+              }
             } while (
                 (resp == null || resp is! int || resp != colId) && count < 5);
           }
