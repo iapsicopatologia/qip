@@ -35,7 +35,8 @@ dependencies:
   dio: ^5.4.2+1
   super_sliver_list: ^0.4.1
   web: ^0.5.1
-  get_mac_address: ^0.0.2
+  device_info_plus: ^10.1.0
+  get_ip_address: ^0.0.6
 
 
 dev_dependencies:

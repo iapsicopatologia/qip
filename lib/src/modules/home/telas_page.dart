@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 import '../../ajustes.dart';
+import '../services/device_info_model.dart';
 import 'parameters.dart';
 import 'telas_controller.dart';
 
@@ -24,12 +28,28 @@ class _TelasPageState extends State<TelasPage> {
   final _formKey = GlobalKey<FormState>();
   final formFieldkey = GlobalKey<FormFieldState<List<ValueNotifier<String>>>>();
   final answerNotifier = ValueNotifier<List<ValueNotifier<String>>>([]);
+  final DeviceInfoModel deviceInfoModel = DeviceInfoModel();
 
   @override
   void initState() {
     super.initState();
     controller = widget.controller ?? Modular.get<TelasController>();
     controller.idPage.value = widget.id ?? 1;
+    if (controller.idPage.value == 1) getIpAddress();
+  }
+
+  Future<void> getIpAddress() async {
+    dynamic ip;
+    await deviceInfoModel.initPlatformState();
+    try {
+      var ipAddress = IpAddress(type: RequestType.json);
+      ip = await ipAddress.getIpAddress();
+      controller.ipAddresValue = '${ip.toString()}_${deviceInfoModel.identify}';
+      debugPrint(ip.toString());
+    } on IpAddressException catch (exception) {
+      controller.ipAddresValue = "{ip: 127.0.0.1}";
+      debugPrint(exception.message);
+    }
   }
 
   @override

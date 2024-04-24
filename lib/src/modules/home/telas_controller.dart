@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../interfaces/asssistido_remote_storage_interface.dart';
-import 'package:get_mac_address/get_mac_address.dart';
 import 'package:just_audio/just_audio.dart';
 
 //Reatividade na classe inteira
 class TelasController {
-  String macAddress = 'Unknown';
-  final _getMacAddressPlugin = GetMacAddress();
+  String ipAddresValue = "INVALID";
   bool isEnd = false;
   final isRunningSync = ValueNotifier<bool>(false);
   final completeSendData = Completer<dynamic>();
@@ -33,8 +30,7 @@ class TelasController {
         if (rowId == 0) {
           do {
             count++;
-            final macAddress = await getMacAddress();
-            resp = await storage.addData([macAddress, syncVar]);
+            resp = await storage.addData([ipAddresValue as String, syncVar]);
           } while ((resp == null || resp is! int) && count < 5);
           rowId = resp;
         } else {
@@ -109,16 +105,5 @@ class TelasController {
         },
       );
     }
-  }
-
-  Future<String> getMacAddress() async {
-    String macAddress;
-    try {
-      macAddress =
-          await _getMacAddressPlugin.getMacAddress() ?? 'Unknown mac address';
-    } on PlatformException {
-      macAddress = 'Failed mac address';
-    }
-    return macAddress;
   }
 }
