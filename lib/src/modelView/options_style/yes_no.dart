@@ -34,7 +34,7 @@ class _TypeYesNoState extends State<TypeYesNo> {
       key: _formKey,
       onChanged: () {
         if (_formKey.currentState!.validate()) {
-          widget.answer.value = answerAux.reduce((value,element) => ValueNotifier<String>('${value.value};{element.value}')).value; 
+          widget.answer.value = answerAux.reduce((value,element) => ValueNotifier<String>('${value.value};${element.value}')).value; 
         } else {
           widget.answer.value = "";
         }
