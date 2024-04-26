@@ -2,6 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:qip_triagem/src/modelView/options_style/custom_dropdown.dart';
 import 'package:qip_triagem/src/modelView/options_style/muro_colorido.dart';
 import '/src/modelView/options_style/display_frame.dart';
 import '/src/modelView/options_style/multi_selection_list.dart';
@@ -2207,91 +2208,124 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
     'itens': (
       TelasController controller,
       GlobalKey<FormFieldState<List<ValueNotifier<String>>>> state,
-    ) =>
-        [
-          const DisplayFrame(
-            body: 'assets/questao48.png',
-            bodyHasFrame: true,
-          ),
-          const SizedBox(height: 10.0),
-          const Divider(),
-          const SizedBox(height: 10.0),
-          SingleSelectionList(
-            answer: controller.answerAux.value[0]
-              ..addListener(() =>
-                  state.currentState!.didChange(controller.answerAux.value)),
-            title: 'a) Nojo:',
-            icon: Icons.more_time,
-            options: const ["1", "2", "3", "4", "5", "6"],
-            optionsColumnsSize: 6,
-            hasPrefiroNaoDizer: false,
-          ),
-          const SizedBox(height: 10.0),
-          const Divider(),
-          const SizedBox(height: 10.0),
-          SingleSelectionList(
-            answer: controller.answerAux.value[1]
-              ..addListener(() =>
-                  state.currentState!.didChange(controller.answerAux.value)),
-            title: 'b) Tristeza:',
-            icon: Icons.more_time,
-            options: const ["1", "2", "3", "4", "5", "6"],
-            optionsColumnsSize: 6,
-            hasPrefiroNaoDizer: false,
-          ),
-          const SizedBox(height: 10.0),
-          const Divider(),
-          const SizedBox(height: 10.0),
-          SingleSelectionList(
-            answer: controller.answerAux.value[2]
-              ..addListener(() =>
-                  state.currentState!.didChange(controller.answerAux.value)),
-            title: 'c) Medo:',
-            icon: Icons.more_time,
-            options: const ["1", "2", "3", "4", "5", "6"],
-            optionsColumnsSize: 6,
-            hasPrefiroNaoDizer: false,
-          ),
-          const SizedBox(height: 10.0),
-          const Divider(),
-          const SizedBox(height: 10.0),
-          SingleSelectionList(
-            answer: controller.answerAux.value[3]
-              ..addListener(() =>
-                  state.currentState!.didChange(controller.answerAux.value)),
-            title: 'd) Raiva:',
-            icon: Icons.more_time,
-            options: const ["1", "2", "3", "4", "5", "6"],
-            optionsColumnsSize: 6,
-            hasPrefiroNaoDizer: false,
-          ),
-          const SizedBox(height: 10.0),
-          const Divider(),
-          const SizedBox(height: 10.0),
-          SingleSelectionList(
-            answer: controller.answerAux.value[4]
-              ..addListener(() =>
-                  state.currentState!.didChange(controller.answerAux.value)),
-            title: 'e) Alegria:',
-            icon: Icons.more_time,
-            options: const ["1", "2", "3", "4", "5", "6"],
-            optionsColumnsSize: 6,
-            hasPrefiroNaoDizer: false,
-          ),
-          const SizedBox(height: 10.0),
-          const Divider(),
-          const SizedBox(height: 10.0),
-          SingleSelectionList(
-            answer: controller.answerAux.value[5]
-              ..addListener(() =>
-                  state.currentState!.didChange(controller.answerAux.value)),
-            title: 'f) Surpresa:',
-            icon: Icons.more_time,
-            options: const ["1", "2", "3", "4", "5", "6"],
-            optionsColumnsSize: 6,
-            hasPrefiroNaoDizer: false,
-          ),
-        ],
+    ) {
+      const List<String> list = [
+        '',
+        'Nojo',
+        'Tristeza',
+        'Medo',
+        'Raiva',
+        'Alegria',
+        'Surpresa'
+      ];
+      return [
+        Row(
+          children: [
+            const DisplayFrame(
+              body: 'assets/questao48_1.png',
+              bodyHasFrame: true,
+            ),
+            const SizedBox(width: 20.0),
+            CustomDropdown(
+              list: list,
+              answer: controller.answerAux.value[0]
+                ..addListener(() =>
+                    state.currentState!.didChange(controller.answerAux.value)),
+            )
+          ],
+        ),
+        const SizedBox(height: 10.0),
+        const Divider(),
+        const SizedBox(height: 10.0),
+        Row(
+          children: [
+            const DisplayFrame(
+              body: 'assets/questao48_2.png',
+              bodyHasFrame: true,
+            ),
+            const SizedBox(width: 20.0),
+            CustomDropdown(
+              list: list,
+              answer: controller.answerAux.value[1]
+                ..addListener(() =>
+                    state.currentState!.didChange(controller.answerAux.value)),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10.0),
+        const Divider(),
+        const SizedBox(height: 10.0),
+        Row(
+          children: [
+            const DisplayFrame(
+              body: 'assets/questao48_3.png',
+              bodyHasFrame: true,
+            ),
+            const SizedBox(width: 20.0),
+            CustomDropdown(
+              list: list,
+              answer: controller.answerAux.value[2]
+                ..addListener(() =>
+                    state.currentState!.didChange(controller.answerAux.value)),
+            ),
+          ],
+        ),        
+        const SizedBox(height: 10.0),
+        const Divider(),
+        const SizedBox(height: 10.0),
+        Row(
+          children: [
+            const DisplayFrame(
+              body: 'assets/questao48_4.png',
+              bodyHasFrame: true,
+            ),
+            const SizedBox(width: 20.0),
+            CustomDropdown(
+              list: list,
+              answer: controller.answerAux.value[3]
+                ..addListener(() =>
+                    state.currentState!.didChange(controller.answerAux.value)),
+            ),
+          ],
+        ),        
+        const SizedBox(height: 10.0),
+        const Divider(),
+        const SizedBox(height: 10.0),
+        Row(
+          children: [
+            const DisplayFrame(
+              body: 'assets/questao48_5.png',
+              bodyHasFrame: true,
+            ),
+            const SizedBox(width: 20.0),
+            CustomDropdown(
+              list: list,
+              answer: controller.answerAux.value[4]
+                ..addListener(() =>
+                    state.currentState!.didChange(controller.answerAux.value)),
+            ),
+          ],
+        ),        
+        const SizedBox(height: 10.0),
+        const Divider(),
+        const SizedBox(height: 10.0),
+        Row(
+          children: [
+            const DisplayFrame(
+              body: 'assets/questao48_6.png',
+              bodyHasFrame: true,
+            ),
+            const SizedBox(width: 20.0),
+            CustomDropdown(
+              list: list,
+              answer: controller.answerAux.value[5]
+                ..addListener(() =>
+                    state.currentState!.didChange(controller.answerAux.value)),
+            ),
+          ],
+        ),        
+      ];
+    }
   },
   61: {
     'hasProx': true,

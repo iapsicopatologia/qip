@@ -30,7 +30,7 @@ class TelasController {
         if (rowId == 0) {
           do {
             count++;
-            resp = await storage.addData([ipAddresValue as String, syncVar]);
+            resp = await storage.addData([ipAddresValue, syncVar]);
           } while ((resp == null || resp is! int) && count < 5);
           rowId = resp;
         } else {
