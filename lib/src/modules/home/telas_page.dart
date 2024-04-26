@@ -171,70 +171,69 @@ class _TelasPageState extends State<TelasPage> {
                             bottomLeft: Radius.circular(20),
                             bottomRight: Radius.circular(20)),
                         borderSide: BorderSide(color: Colors.white)),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 20, top: 10, right: 20, bottom: 20),
-                      child: Form(
-                        key: _formKey,
-                        onChanged: () {
-                          if (_formKey.currentState!.validate()) {
-                            List<ValueNotifier<String>> answer =
-                                formFieldkey.currentState!.value!;
-                            answerNotifier.value = answer;
+                    child: Form(
+                      key: _formKey,
+                      onChanged: () {
+                        if (_formKey.currentState!.validate()) {
+                          List<ValueNotifier<String>> answer =
+                              formFieldkey.currentState!.value!;
+                          answerNotifier.value = answer;
+                        } else {
+                          answerNotifier.value = [];
+                        }
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: FormField<List<ValueNotifier<String>>>(
+                        key: formFieldkey,
+                        initialValue: controller.answerAux.value,
+                        validator: (List<ValueNotifier<String>>? value) {
+                          if (value == null) {
+                            return 'Por favor responda todas as questões';
                           } else {
-                            answerNotifier.value = [];
-                          }
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        child: FormField<List<ValueNotifier<String>>>(
-                          key: formFieldkey,
-                          initialValue: controller.answerAux.value,
-                          validator: (List<ValueNotifier<String>>? value) {
-                            if (value == null) {
+                            final count =
+                                value.where((item) => item.value != "").length;
+                            if (count != value.length) {
                               return 'Por favor responda todas as questões';
-                            } else {
-                              final count = value
-                                  .where((item) => item.value != "")
-                                  .length;
-                              if (count != value.length) {
-                                return 'Por favor responda todas as questões';
-                              }
                             }
-                            return (null);
-                          },
-                          builder: (FormFieldState<List<ValueNotifier<String>>>
-                              state) {
-                            List<Widget> itens =
-                                telas[controller.idPage.value]!['itens']!(
-                                    controller, formFieldkey);
-                            return FutureBuilder(
-                                future: controller.completeSendData.future,
-                                builder: (BuildContext context,
-                                        AsyncSnapshot<dynamic>
-                                            completeSendData) =>
-                                    completeSendData.hasData ||
-                                            !controller.isEnd
-                                        ? Scrollbar(
+                          }
+                          return (null);
+                        },
+                        builder: (FormFieldState<List<ValueNotifier<String>>>
+                            state) {
+                          List<Widget> itens =
+                              telas[controller.idPage.value]!['itens']!(
+                                  controller, formFieldkey);
+                          return FutureBuilder(
+                              future: controller.completeSendData.future,
+                              builder: (BuildContext context,
+                                      AsyncSnapshot<dynamic>
+                                          completeSendData) =>
+                                  completeSendData.hasData || !controller.isEnd
+                                      ? Scrollbar(
+                                          controller: controllerOne,
+                                          thumbVisibility: true,
+                                          trackVisibility: true,
+                                          thickness: 10,
+                                          radius: const Radius.circular(5),
+                                          child: SuperListView.builder(
                                             controller: controllerOne,
-                                            thumbVisibility: true,
-                                            trackVisibility: true,
-                                            thickness: 10,
-                                            radius: const Radius.circular(5),
-                                            child: SuperListView.builder(
-                                              controller: controllerOne,
-                                              shrinkWrap: true,
-                                              itemCount: itens.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                          int index) =>
-                                                      itens[index],
+                                            shrinkWrap: false,
+                                            itemCount: itens.length,
+                                            itemBuilder: (BuildContext context,
+                                                    int index) =>
+                                                Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20,
+                                                  top: 10,
+                                                  right: 20,
+                                                  bottom: 20),
+                                              child: itens[index],
                                             ),
-                                          )
-                                        : const Center(
-                                            child:
-                                                CircularProgressIndicator()));
-                          },
-                        ),
+                                          ),
+                                        )
+                                      : const Center(
+                                          child: CircularProgressIndicator()));
+                        },
                       ),
                     ),
                   ),
