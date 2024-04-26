@@ -217,7 +217,7 @@ class _TelasPageState extends State<TelasPage> {
                                           radius: const Radius.circular(5),
                                           child: SuperListView.builder(
                                             controller: controllerOne,
-                                            shrinkWrap: false,
+                                            shrinkWrap: true,
                                             itemCount: itens.length,
                                             itemBuilder: (BuildContext context,
                                                     int index) =>
