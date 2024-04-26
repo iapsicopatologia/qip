@@ -2,7 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:qip_triagem/src/modelView/options_style/custom_dropdown.dart';
+import 'package:qip_triagem/src/modelView/base_widget/custom_dropdown.dart';
 import 'package:qip_triagem/src/modelView/options_style/muro_colorido.dart';
 import '/src/modelView/options_style/display_frame.dart';
 import '/src/modelView/options_style/multi_selection_list.dart';

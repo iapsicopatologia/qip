@@ -7,6 +7,11 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: ThemeData(
+        scrollbarTheme: ScrollbarThemeData(
+          thumbVisibility: WidgetStateProperty.all<bool>(true),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       routerConfig: Modular.routerConfig,
     );

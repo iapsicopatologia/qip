@@ -29,6 +29,7 @@ class _TelasPageState extends State<TelasPage> {
   final formFieldkey = GlobalKey<FormFieldState<List<ValueNotifier<String>>>>();
   final answerNotifier = ValueNotifier<List<ValueNotifier<String>>>([]);
   final DeviceInfoModel deviceInfoModel = DeviceInfoModel();
+  final ScrollController controllerOne = ScrollController();
 
   @override
   void initState() {
@@ -54,9 +55,9 @@ class _TelasPageState extends State<TelasPage> {
 
   @override
   void dispose() {
-    super.dispose();
     if (formFieldkey.currentState != null) formFieldkey.currentState!.dispose();
     if (_formKey.currentState != null) _formKey.currentState!.dispose();
+    super.dispose();
   }
 
   @override
@@ -213,12 +214,21 @@ class _TelasPageState extends State<TelasPage> {
                                             completeSendData) =>
                                     completeSendData.hasData ||
                                             !controller.isEnd
-                                        ? SuperListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: itens.length,
-                                            itemBuilder: (BuildContext context,
-                                                    int index) =>
-                                                itens[index],
+                                        ? Scrollbar(
+                                            controller: controllerOne,
+                                            thumbVisibility: true,
+                                            trackVisibility: true,
+                                            thickness: 10,
+                                            radius: const Radius.circular(5),
+                                            child: SuperListView.builder(
+                                              controller: controllerOne,
+                                              shrinkWrap: true,
+                                              itemCount: itens.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                          int index) =>
+                                                      itens[index],
+                                            ),
                                           )
                                         : const Center(
                                             child:
