@@ -38,7 +38,8 @@ class _TelasPageState extends State<TelasPage> {
     if ((widget.id ?? 1) == 1) {
       completeId.complete(getIpAddress());
     } else {
-      completeId.complete(controller.idPage.value = widget.id!);
+      controller.idPage.value = widget.id!;
+      completeId.complete(controller.idPage.value);
     }
     super.initState();
   }
