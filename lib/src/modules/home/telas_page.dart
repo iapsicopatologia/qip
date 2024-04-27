@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get_ip_address/get_ip_address.dart';
@@ -35,39 +34,60 @@ class _TelasPageState extends State<TelasPage> {
   @override
   void initState() {
     controller = widget.controller ?? Modular.get<TelasController>();
-    if ((widget.id ?? 1) == 1) {
-      completeId.complete(getIpAddress());
-    } else {
-      controller.idPage.value = widget.id!;
-      completeId.complete(Future.sync(() => controller.idPage.value));
-    }
+    completeId.complete(getIpAddress());
     super.initState();
   }
 
   Future<int> getIpAddress() async {
     dynamic ip;
     await deviceInfoModel.initPlatformState();
-    try {
-      var ipAddress = IpAddress(type: RequestType.json);
-      ip = await ipAddress.getIpAddress();
-      controller.ipAddresValue = '${ip.toString()}_${deviceInfoModel.identify}';
-      debugPrint(ip.toString());
-      final resp = await controller.storage
-          .getChanges(macAddres: controller.ipAddresValue);
-      if (resp != null) {
-        if (resp[0] != 0) {
-          controller.rowId = resp[0];
-          controller.idPage.value =
-              int.parse((resp[1] as String).split(" ")[1]);
-          return controller.idPage.value;
+    if ((widget.id ?? 1) == 1) {
+      try {
+        var ipAddress = IpAddress(type: RequestType.json);
+        ip = await ipAddress.getIpAddress();
+        controller.ipAddresValue =
+            '${ip.toString()}_${deviceInfoModel.identify}';
+        debugPrint(ip.toString());
+        final resp = await controller.storage
+            .getChanges(macAddres: controller.ipAddresValue);
+        if (resp != null) {
+          if (resp[0] != 0) {
+            controller.rowId = resp[0];
+            controller.idPage.value =
+                int.parse((resp[1] as String).split(" ")[1]);
+          } else {
+            controller.rowId = 0;            
+            controller.idPage.value = 1;
+          }
         }
+      } on IpAddressException catch (exception) {
+        controller.ipAddresValue = "{ip: 127.0.0.1}";
+        debugPrint(exception.message);
+        controller.rowId = 0;   
+        controller.idPage.value = 1;
       }
-    } on IpAddressException catch (exception) {
-      controller.ipAddresValue = "{ip: 127.0.0.1}";
-      debugPrint(exception.message);
+    } else {      
+      controller.idPage.value = widget.id!;
     }
-    controller.idPage.value = 1;
-    return 1;
+    if (telas[controller.idPage.value]?['delay'] != null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        //So executa depois que tudo ja estiver desenhado
+        (_) {
+          controller.delay(
+            hasProx: telas[controller.idPage.value]!['hasProx'],
+            time: telas[controller.idPage.value]!['delay']!,
+            setState: setState,
+            answerNotifier: answerNotifier,
+          );
+        },
+      );
+    }
+    if (telas[controller.idPage.value]?['answerLenght'] != 0) {
+      controller.answerAux.value = List.generate(
+          telas[controller.idPage.value]?['answerLenght'],
+          (index) => ValueNotifier<String>(""));
+    }
+    return controller.idPage.value;
   }
 
   @override
@@ -85,24 +105,6 @@ class _TelasPageState extends State<TelasPage> {
         builder: (BuildContext context, AsyncSnapshot idPage) {
           if (idPage.hasData && idPage.data != 0) {
             //debugPrint(Modular.args.data.toString());
-            if (telas[idPage.data]?['delay'] != null) {
-              WidgetsBinding.instance.addPostFrameCallback(
-                //So executa depois que tudo ja estiver desenhado
-                (_) {
-                  controller.delay(
-                    hasProx: telas[idPage.data]!['hasProx'],
-                    time: telas[idPage.data]!['delay']!,
-                    setState: setState,
-                    answerNotifier: answerNotifier,
-                  );
-                },
-              );
-            }
-            if (telas[idPage.data]?['answerLenght'] != 0) {
-              controller.answerAux.value = List.generate(
-                  telas[idPage.data]?['answerLenght'],
-                  (index) => ValueNotifier<String>(""));
-            }
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 final double tam = typeSpace(constraints.maxWidth);
