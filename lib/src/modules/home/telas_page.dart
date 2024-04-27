@@ -50,23 +50,23 @@ class _TelasPageState extends State<TelasPage> {
         debugPrint(ip.toString());
         final resp = await controller.storage
             .getChanges(macAddres: controller.ipAddresValue);
-        if (resp != null) {
-          if (resp[0] > 0 && resp[0] < 78) {
-            controller.rowId = resp[0];
-            controller.idPage.value =
-                int.parse((resp[1] as String).split(" ")[1]);
-          } else {
-            controller.rowId = 0;            
-            controller.idPage.value = 1;
-          }
+        if (resp != null &&
+            resp[0] > 0 &&
+            int.parse((resp[1] as String).split(" ")[1]) < 78) {
+          controller.rowId = resp[0];
+          controller.idPage.value =
+              int.parse((resp[1] as String).split(" ")[1]);
+        } else {
+          controller.rowId = 0;
+          controller.idPage.value = 1;
         }
       } on IpAddressException catch (exception) {
         controller.ipAddresValue = "{ip: 127.0.0.1}";
         debugPrint(exception.message);
-        controller.rowId = 0;   
+        controller.rowId = 0;
         controller.idPage.value = 1;
       }
-    } else {      
+    } else {
       controller.idPage.value = widget.id!;
     }
     if (telas[controller.idPage.value]?['delay'] != null) {
