@@ -60,7 +60,12 @@ class AssistidoRemoteStorageRepository
   Future<dynamic> setData(String value, int rowId, int colId,
       {String table = "BDados"}) async {
     dynamic resp = await sendGet(
-        table: table, func: 'set', type: 'data', p1: rowId, p2: colId, p3: value);
+        table: table,
+        func: 'set',
+        type: 'data',
+        p1: rowId,
+        p2: colId,
+        p3: value);
     return resp;
   }
 
@@ -70,9 +75,10 @@ class AssistidoRemoteStorageRepository
   }
 
   @override
-  Future<List<dynamic>?> getChanges({String table = "BDados"}) async {
-    List<dynamic>? response =
-        await sendGet(table: table, func: 'get', type: 'changes');
+  Future<List<dynamic>?> getChanges(
+      {String table = "BDados", required String macAddres}) async {
+    List<dynamic>? response = await sendGet(
+        table: table, func: 'changes', type: 'data', p1: macAddres);
     return response;
     /*if (response != null) {
         if ((response as List).isNotEmpty) {
