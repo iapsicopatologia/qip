@@ -39,7 +39,7 @@ class _TelasPageState extends State<TelasPage> {
       completeId.complete(getIpAddress());
     } else {
       controller.idPage.value = widget.id!;
-      completeId.complete(controller.idPage.value);
+      completeId.complete(Future.sync(() => controller.idPage.value));
     }
     super.initState();
   }
@@ -57,7 +57,8 @@ class _TelasPageState extends State<TelasPage> {
       if (resp != null) {
         if (resp[0] != 0) {
           controller.rowId = resp[0];
-          controller.idPage.value = int.parse((resp[1] as String).split(" ")[1]);
+          controller.idPage.value =
+              int.parse((resp[1] as String).split(" ")[1]);
           return controller.idPage.value;
         }
       }
