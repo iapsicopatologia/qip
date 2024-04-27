@@ -51,7 +51,7 @@ class _TelasPageState extends State<TelasPage> {
         final resp = await controller.storage
             .getChanges(macAddres: controller.ipAddresValue);
         if (resp != null) {
-          if (resp[0] != 0) {
+          if (resp[0] > 0 && resp[0] < 78) {
             controller.rowId = resp[0];
             controller.idPage.value =
                 int.parse((resp[1] as String).split(" ")[1]);
