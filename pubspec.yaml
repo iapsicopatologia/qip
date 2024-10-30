@@ -13,8 +13,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter  
-  just_audio:
-    path: assets/just_audio/just_audio   
+  just_audio: ^0.9.41
+  #just_audio:
+  #  path: assets/just_audio/just_audio   
   #audioplayers: ^6.0.0
   flutter_colorpicker: ^1.0.3        
   flutter_modular: ^6.3.2
@@ -49,6 +50,8 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+# git config --global --add safe.directory *
+
 flutter:
   uses-material-design: true
   assets:
