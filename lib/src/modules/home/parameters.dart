@@ -1437,7 +1437,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
               '6 - 2 - 4 - 7 - 5 - 1 - 3',
               '5 - 1 - 3 - 4 - 6 - 7 - 2',
               '6 - 2 - 5 - 1 - 3 - 4 - 7',
-              '7 - 4 - 3 - 5 - 1 - 2 - 6 '
+              '7 - 4 - 3 - 5 - 1 - 2 - 6'
             ],
             optionsColumnsSize: 1,
           ),
