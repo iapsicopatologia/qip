@@ -306,7 +306,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
             hasPrefiroNaoDizer: false,
             optionsColumnsSize: 2,
             options: const [
-              "Solteiro (a):",
+              "Solteiro (a)",
               "Casado (a)",
               "Viúvo (a)",
               "Divorciado(a)",
