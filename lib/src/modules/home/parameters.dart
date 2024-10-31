@@ -1063,7 +1063,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
             icon: Icons.more_time,
             hasPrefiroNaoDizer: false,
             options: const [
-              'Impaciente ',
+              'Impaciente',
               'Desanimado(a)',
               'Sedutor(a)',
               'Aliviado(a)'
