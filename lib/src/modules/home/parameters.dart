@@ -2573,7 +2573,7 @@ Declaramos que obtivemos de forma apropriada e voluntária, o Consentimento Livr
             ],
             optionsColumnsSize: 2,
             mimSizeAnswer: 1,
-            maxSizeAnswer: 65,
+            maxSizeAnswer: 72,
           ),
         ],
   },

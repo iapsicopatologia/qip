@@ -14,7 +14,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
   @override
   void initState() {
-    dropdownValue = widget.list.first;
+    dropdownValue = widget.answer.value; //widget.list.first;
     super.initState();
   }
   @override
