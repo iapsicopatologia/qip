@@ -361,7 +361,7 @@ class _TelasPageState extends State<TelasPage> {
                   List<String> aux = resp.map((e) => e.value).toList();
                   controller.answer.value.add((
                     controller.idPage.value,
-                    "${DateTime.now().toString()} - ${aux.join(";")}"
+                    "${DateTime.now().toString()} ; ${aux.join(";")}"
                   ));
                   debugPrint(controller.answer.value.toString());
                   if ((controller.idPage.value + 1) >= 78) {

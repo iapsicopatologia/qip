@@ -21,7 +21,7 @@ class AssistidoRemoteStorageRepository
       dynamic p2,
       dynamic p3}) async {
     var response = await provider?.get(
-        '$baseUrl/macros/s/AKfycbzQgJBXevX86H1Q_M9csBasJEi5dSQrUJNlANkRmo5MWQenrYvp1p69Wb63-YBdW0QYaQ/exec',
+        '$baseUrl/macros/s/AKfycbx-rdocvYSPOvm49J9EyXQoCbVahDMIJ1MLoyJqxU8rp-VNNXiLR56-ZTGVPXSEbIHkSg/exec',
         queryParameters: {
           "table": table,
           "func": func,
