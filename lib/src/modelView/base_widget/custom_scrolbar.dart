@@ -44,7 +44,7 @@ class _CustomScrollbarState extends State<CustomScrollbar> {
 
   ScrollbarPainter _buildMaterialScrollbarPainter() {
     return ScrollbarPainter(
-      color: Theme.of(context).highlightColor.withOpacity(1.0),
+      color: Theme.of(context).highlightColor.withAlpha(1),
       textDirection: Directionality.of(context),
       thickness: _kScrollbarThickness,
       fadeoutOpacityAnimation: const AlwaysStoppedAnimation<double>(1.0),
