@@ -23,7 +23,7 @@ jobs:
 
       - name: Build Flutter Web App
         run: |
-          flutter build web --release --base-href=/qip/
+          flutter build web --wasm --release --base-href=/qip/
           cp build/web/index.html build/web/404.html
 
       - name: Deploy to GitHub Pages
