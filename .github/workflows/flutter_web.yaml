@@ -1,4 +1,4 @@
-name: Web qip
+name: Deploy Flutter Web
 
 on:
   push:
@@ -10,31 +10,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
           channel: "beta"
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build Web
-        run: flutter build web --wasm --release --base-href=/qip/
+      - name: Build Flutter Web App
+        run: |
+          flutter build web --wasm --release --base-href=/qip/
+          cp build/web/index.html build/web/404.html
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         run: |
           git config --global init.defaultBranch main
           cd build/web
           git init
-          git config --global user.email josuemorais@gmail.com
-          git config --global user.name josuemoraisgh
-          git status
-          #git remote add origin https://${{secrets.token}}@github.com/josuemoraisgh/qip.git
+          git config --global user.email "josuemorais@gmail.com"
+          git config --global user.name "josuemoraisgh"
           git remote add origin https://${{secrets.token}}@github.com/iapsicopatologia/qip.git
           git checkout -b gh-pages
-          git add --all
-          git commit -m "update"
-          git push origin gh-pages -f
+          git add .
+          git commit -m "Deploy Flutter Web App"
+          git push --force origin gh-pages
