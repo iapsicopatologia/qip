@@ -13,12 +13,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter  
-  just_audio: ^0.9.41
+  just_audio: ^0.9.43
   #just_audio:
   #  path: assets/just_audio/just_audio   
   #audioplayers: ^6.0.0
-  flutter_colorpicker: ^1.0.3        
-  flutter_modular: ^6.3.2
+  flutter_colorpicker: ^1.1.0       
+  flutter_modular: ^6.3.4
   hive: ^2.2.3
   hive_generator: ^2.0.1
   hive_flutter: ^1.1.0  
@@ -26,25 +26,25 @@ dependencies:
   #card_settings: ^3.5.0
   #card_settings:
   #  path: assets/card_settings
-  brasil_fields: ^1.14.3
-  intl: ^0.19.0
+  brasil_fields: ^1.17.0
+  intl: ^0.20.2
   #pattern_formatter: ^3.0.0
-  collection: ^1.18.0
+  collection: ^1.19.0
   rx_notifier: ^2.3.0
   #image_size_getter: ^2.1.2
-  cupertino_icons: ^1.0.6
-  dio: ^5.4.2+1
+  cupertino_icons: ^1.0.8
+  dio: ^5.7.0
   super_sliver_list: ^0.4.1
-  web: ^0.5.1
-  device_info_plus: ^10.1.0
-  get_ip_address: ^0.0.6
+  web: ^1.1.0
+  device_info_plus: ^11.2.1
+  get_ip_address: ^0.0.7
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.2
-  build_runner: ^2.3.3
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.14
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

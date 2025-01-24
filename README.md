@@ -1,16 +1,27 @@
-# qip
+## Alternativa: Python HTTP Server
 
-A new Flutter project.
+Se você não quiser instalar o Node.js, pode usar o servidor embutido no Python. O Windows geralmente não inclui Python por padrão, então instale primeiro o [Python](https://www.python.org/).
 
-## Getting Started
+### Passos:
 
-This project is a starting point for a Flutter application.
+1. **Verifique a instalação do Python**  
+   Após instalar o Python, confirme que ele está funcionando corretamente executando o comando abaixo no terminal:
+   
+   ```bash
+   python --version
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. **Navegue até o diretório do projeto**
+   Use o terminal para acessar o diretório onde os arquivos do projeto estão localizados, por exemplo:
+   
+   ```bash
+   cd caminho\para\build\web
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. **Navegue até o diretório do projeto**
+   Para iniciar o servidor HTTP embutido no Python, use o comando abaixo:
+   
+   ```bash
+   python -m http.server 8080
+   ```
+   Isso iniciará o servidor em http://127.0.0.1:8080. Abra esse endereço no navegador para visualizar o aplicativo.
